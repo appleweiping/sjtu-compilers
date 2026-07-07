@@ -1,0 +1,7 @@
+SJTU Compilers front-end (labs 1-4) — full grade.sh results, WSL2 Ubuntu 24.04,
+flex 2.6.4 / bison 3.8.2 / g++ 13.3.0:
+
+LAB1 SCORE: 100   (7/7 straight-line-program interpreter tests)
+LAB2 SCORE: 100   (54/54 lexer testcases, byte-exact token stream)
+LAB3 SCORE: 100   (51/51 parser testcases, byte-exact AST + negative case)
+LAB4 SCORE: 100   (51/51 semant testcases, reference error messages)

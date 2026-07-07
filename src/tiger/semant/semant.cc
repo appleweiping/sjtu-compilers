@@ -96,18 +96,26 @@ Ty *TransExp(env::VEnv *venv, env::TEnv *tenv, absyn::Exp *exp) {
       EM->Error(e->pos, "undefined function " + e->func->Name());
       return VoidT();
     }
-    auto ait = e->args->exps.begin();
-    auto fit = fe->formals->tys.begin();
-    for (; ait != e->args->exps.end() && fit != fe->formals->tys.end();
-         ++ait, ++fit) {
-      Ty *at = TransExp(venv, tenv, *ait);
-      if (!SameType(at, *fit))
-        EM->Error((*ait)->pos, "para type mismatch");
+    size_t n_args = e->args->exps.size();
+    size_t n_formals = fe->formals->tys.size();
+    if (n_args != n_formals) {
+      // Argument-count mismatch: type-check the actuals (to surface nested
+      // errors) but report exactly one count-mismatch error.
+      for (auto *a : e->args->exps) TransExp(venv, tenv, a);
+      if (n_args > n_formals)
+        EM->Error(e->pos, "too many params in function " + e->func->Name());
+      else
+        EM->Error(e->pos, "para type mismatch");
+    } else {
+      // Counts match: check each argument's type against its formal.
+      auto ait = e->args->exps.begin();
+      auto fit = fe->formals->tys.begin();
+      for (; ait != e->args->exps.end(); ++ait, ++fit) {
+        Ty *at = TransExp(venv, tenv, *ait);
+        if (!SameType(at, *fit))
+          EM->Error((*ait)->pos, "para type mismatch");
+      }
     }
-    if (ait != e->args->exps.end())
-      EM->Error(e->pos, "too many params in function " + e->func->Name());
-    else if (fit != fe->formals->tys.end())
-      EM->Error(e->pos, "para type mismatch");
     return fe->result ? fe->result->ActualTy() : VoidT();
   }
 
@@ -316,22 +324,29 @@ void TransDec(env::VEnv *venv, env::TEnv *tenv, absyn::Dec *dec) {
       Ty *resolved = TransTy(tenv, nt->ty);
       if (placeholder) placeholder->ty = resolved;
     }
-    // Pass 3: detect illegal cycles (a NAME chain with no record/array).
+    // Pass 3: detect illegal cycles. A type is cyclic if following its NAME
+    // chain never reaches a record/array/base type (i.e. loops back on itself).
+    // Report at most one error for the whole batch, at the first cyclic decl.
     for (auto *nt : d->types->nametys) {
-      auto *cur = dynamic_cast<type::NameTy *>(tenv->Look(nt->name));
-      type::NameTy *slow = cur, *fast = cur;
-      while (fast && fast->ty &&
-             dynamic_cast<type::NameTy *>(fast->ty)) {
-        fast = dynamic_cast<type::NameTy *>(fast->ty);
-        if (fast && fast->ty && dynamic_cast<type::NameTy *>(fast->ty))
-          fast = dynamic_cast<type::NameTy *>(fast->ty);
-        else
-          break;
-        slow = dynamic_cast<type::NameTy *>(slow->ty);
-        if (slow == fast) {
-          EM->Error(d->pos, "illegal type cycle");
+      auto *start = dynamic_cast<type::NameTy *>(tenv->Look(nt->name));
+      type::NameTy *cur = start;
+      bool cyclic = false;
+      // Walk at most N steps (N = batch size); if still on a NAME, it's a loop.
+      for (size_t step = 0; step <= d->types->nametys.size(); ++step) {
+        if (!cur || !cur->ty) break;                 // resolves to nothing yet
+        auto *next = dynamic_cast<type::NameTy *>(cur->ty);
+        if (!next) break;                            // reached a real type: ok
+        if (next == start) {                         // looped back to origin
+          cyclic = true;
           break;
         }
+        cur = next;
+        if (step == d->types->nametys.size()) cyclic = true;
+      }
+      if (cyclic) {
+        Pos p = d->types->nametys.front()->ty->pos;
+        EM->Error(p, "illegal type cycle");
+        break;  // one error per batch
       }
     }
     return;

@@ -1,0 +1,8 @@
+LAB4 (semantic analysis / type-checking) result:
+========== Lab4 Test ==========
+[^_^]: Pass
+LAB4 SCORE: 100
+(all 51 .tig testcases: type errors match the reference messages exactly:
+ undefined variable/type/function, type mismatch, para type mismatch,
+ too many params, illegal type cycle, then/else mismatch, loop var assign,
+ while/if-then non-unit body, record/array required, etc.)
