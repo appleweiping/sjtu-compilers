@@ -1,0 +1,30 @@
+# Build artifacts
+/build/
+*.o
+*.obj
+*.out
+*.exe
+test.out
+
+# Generated lexer/parser (produced from tiger.lex / tiger.y at build time)
+src/tiger/lex/scanner.cc
+src/tiger/parse/parser.cc
+src/tiger/parse/parser.h
+src/tiger/parse/location.hh
+src/tiger/parse/position.hh
+src/tiger/parse/stack.hh
+
+# Generated assembly from the compiler
+testdata/**/*.tig.s
+*.tig.s
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
