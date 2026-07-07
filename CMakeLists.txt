@@ -53,6 +53,7 @@ if(FLEX_FOUND AND BISON_FOUND AND EXISTS ${TIGER_LEX} AND EXISTS ${TIGER_Y})
     "src/tiger/types/*.cc"
     "src/tiger/frame/*.cc"
     "src/tiger/translate/*.cc"
+    "src/tiger/parse/parse.cc"
   )
 
   set(TIGER_GEN ${FLEX_TigerLexer_OUTPUTS} ${BISON_TigerParser_OUTPUTS})

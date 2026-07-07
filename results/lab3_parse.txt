@@ -1,0 +1,5 @@
+LAB3 (parser) result:
+========== Lab3 Test ==========
+[^_^]: Pass
+LAB3 SCORE: 100
+(all 51 .tig testcases: AST pretty-print exact match; test49 negative case reports syntax error at 5.18)

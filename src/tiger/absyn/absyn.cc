@@ -26,9 +26,9 @@ const char *OperName(Oper o) {
     case EQ_OP:
       return "EQUAL";
     case NEQ_OP:
-      return "NEQ";
+      return "NOTEQUAL";
     case LT_OP:
-      return "LESS";
+      return "LESSTHAN";
     case LE_OP:
       return "LESSEQ";
     case GT_OP:
