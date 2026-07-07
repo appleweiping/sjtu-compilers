@@ -1,0 +1,8 @@
+# Reference test data and sources are canonical LF (the graders run on Linux).
+testdata/** text eol=lf
+*.tig text eol=lf
+*.out text eol=lf
+*.lex text eol=lf
+*.y text eol=lf
+*.cc text eol=lf
+*.h text eol=lf

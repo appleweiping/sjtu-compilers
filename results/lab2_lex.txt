@@ -1,0 +1,5 @@
+LAB2 (lexer) result:
+========== Lab2 Test ==========
+[^_^]: Pass
+LAB2 SCORE: 100
+(all 54 .tig testcases: exact byte-for-byte match vs reference token stream)
