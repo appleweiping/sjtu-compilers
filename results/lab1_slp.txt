@@ -1,0 +1,9 @@
+========== Lab1 Test ==========
+[^_^]: Pass test 0
+[^_^]: Pass test 1
+[^_^]: Pass test 2
+[^_^]: Pass test 3
+[^_^]: Pass test 4
+[^_^]: Pass test 5
+[^_^]: Pass test 6
+LAB1 SCORE: 100
