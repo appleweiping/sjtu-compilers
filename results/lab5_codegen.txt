@@ -1,0 +1,27 @@
+LAB5 (escape analysis + LLVM translation + code generation) result:
+========== Compiler Test ==========
+Pass bsearch
+Pass dec2bin
+Pass merge/test1
+Pass merge/test2
+Pass merge/test3
+Pass merge/test4
+Pass prime
+Pass qsort
+Pass queens
+Pass tbi
+Pass tfact
+Pass tfo
+Pass tif
+Pass tifn
+Pass tlink
+Pass trec
+Pass twhi
+[^_^]: Pass
+LAB TOTAL SCORE: 100
+
+Pipeline: tiger-compiler emits textual LLVM IR (foo.tig.ll), lowered to native
+x86-64 assembly (foo.tig.s) by llc, linked with runtime.c. Covers recursion,
+nested functions via static links (tlink), records (trec), arrays (queens,
+qsort, bsearch), strings + string comparison (merge), for/while/break, and
+stdin (merge reads integers via getchar).

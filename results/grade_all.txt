@@ -1,0 +1,13 @@
+Full course grader output (scripts/grade.sh all) — WSL2 Ubuntu 24.04,
+flex 2.6.4 / bison 3.8.2 / g++ 13.3.0 / clang+llc 18:
+
+========== Lab1 Test ==========
+LAB1 SCORE: 100
+========== Lab2 Test ==========
+LAB2 SCORE: 100
+========== Lab3 Test ==========
+LAB3 SCORE: 100
+========== Lab4 Test ==========
+LAB4 SCORE: 100
+========== Compiler Test ==========
+LAB TOTAL SCORE: 100
