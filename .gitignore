@@ -14,9 +14,11 @@ src/tiger/parse/location.hh
 src/tiger/parse/position.hh
 src/tiger/parse/stack.hh
 
-# Generated assembly from the compiler
+# Generated assembly / LLVM IR from the compiler
 testdata/**/*.tig.s
+testdata/**/*.tig.ll
 *.tig.s
+*.tig.ll
 
 # Editor / OS
 .vscode/
